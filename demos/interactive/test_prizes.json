@@ -1,26 +1,44 @@
 [
     {
         "name": "iPhone 16 Pro",
-        "count": 1
+        "pic": "https://example.com/iphone.png",
+        "link": "https://apple.com/iphone",
+        "type": 1,
+        "total": 1,
+        "left": 1,
+        "is_use": 1,
+        "probability": 100,
+        "probability_max": 100,
+        "probability_min": 0
     },
     {
         "name": "iPad Pro M4",
-        "count": 3
+        "type": 1,
+        "total": 3,
+        "left": 3,
+        "is_use": 1,
+        "probability": 500,
+        "probability_max": 600,
+        "probability_min": 100
     },
     {
         "name": "AirPods Pro 2",
-        "count": 10
+        "type": 1,
+        "total": 10,
+        "left": 10,
+        "is_use": 1,
+        "probability": 1000,
+        "probability_max": 1600,
+        "probability_min": 600
     },
     {
         "name": "Omnidraw T-Shirt",
-        "count": 50
-    },
-    {
-        "name": "Premium Stickers",
-        "count": 100
-    },
-    {
-        "name": "Kindle Scribe",
-        "count": 5
+        "type": 2,
+        "total": 50,
+        "left": 50,
+        "is_use": 1,
+        "probability": 3000,
+        "probability_max": 4600,
+        "probability_min": 1600
     }
 ]

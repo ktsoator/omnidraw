@@ -4,7 +4,6 @@ import (
 	"context"
 	"interactive/internal/domain"
 	"interactive/internal/repository/dao"
-	"time"
 )
 
 type PrizeRepository struct {
@@ -16,11 +15,18 @@ func NewPrizeRepository(dao *dao.PrizeDAO) *PrizeRepository {
 }
 
 func (repo *PrizeRepository) Create(ctx context.Context, p domain.Prize) error {
-	now := time.Now().UnixMilli()
 	return repo.dao.Insert(dao.PrizeModel{
-		Name:  p.Name,
-		Count: p.Count,
-		Ctime: now,
-		Utime: now,
+		ID:             p.ID,
+		Name:           p.Name,
+		Pic:            p.Pic,
+		Link:           p.Link,
+		Type:           p.Type,
+		Data:           p.Data,
+		Total:          p.Total,
+		Left:           p.Left,
+		IsUse:          p.IsUse,
+		Probability:    p.Probability,
+		ProbabilityMax: p.ProbabilityMax,
+		ProbabilityMin: p.ProbabilityMin,
 	})
 }

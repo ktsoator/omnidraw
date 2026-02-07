@@ -15,9 +15,18 @@ import (
 )
 
 type Prize struct {
-	Id    int64  `json:"id,omitempty"`
-	Name  string `json:"name"`
-	Count int    `json:"count"`
+	ID             int64  `json:"id,omitempty"`
+	Name           string `json:"name"`
+	Pic            string `json:"pic,omitempty"`
+	Link           string `json:"link,omitempty"`
+	Type           int32  `json:"type"`
+	Data           string `json:"data,omitempty"`
+	Total          int64  `json:"total"`
+	Left           int64  `json:"left"`
+	IsUse          int32  `json:"is_use"`
+	Probability    int64  `json:"probability"`
+	ProbabilityMax int64  `json:"probability_max"`
+	ProbabilityMin int64  `json:"probability_min"`
 }
 
 type Result struct {
@@ -165,18 +174,23 @@ func uploadPrize() {
 			break
 		}
 
-		countPrompt := promptui.Prompt{
-			Label: "    Count",
+		totalPrompt := promptui.Prompt{
+			Label: "    Total Count",
 			Templates: &promptui.PromptTemplates{
 				Prompt: "  {{ . }}: ",
 			},
 			Default: "1",
 		}
-		countStr, _ := countPrompt.Run()
-		var count int
-		fmt.Sscanf(countStr, "%d", &count)
+		totalStr, _ := totalPrompt.Run()
+		var total int64
+		fmt.Sscanf(totalStr, "%d", &total)
 
-		prizes = append(prizes, Prize{Name: name, Count: count})
+		prizes = append(prizes, Prize{
+			Name:  name,
+			Total: total,
+			Left:  total,
+			IsUse: 1,
+		})
 	}
 
 	doUpload(prizes)
