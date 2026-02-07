@@ -3,37 +3,38 @@ package handler
 import (
 	"net/http"
 
+	"master/internal/service"
+
 	"github.com/gin-gonic/gin"
-	"github.com/ktsoator/omnidraw/demos/master/internal/service"
 )
 
-func UploadPlayers(ctx *gin.Context) {
+func UploadPlayers(c *gin.Context) {
 	type PlayersReq struct {
 		Players []string `json:"players"`
 	}
 
-	req := PlayersReq{}
-	if err := ctx.ShouldBindJSON(&req); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
+	var req PlayersReq
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid request"})
 		return
 	}
 	if len(req.Players) == 0 {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "players is empty"})
+		c.JSON(http.StatusBadRequest, gin.H{"message": "players is empty"})
 		return
 	}
 	service.SetDrawPlayers(req.Players)
-	ctx.JSON(http.StatusOK, gin.H{"message": "success"})
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }
 
-func Draw(ctx *gin.Context) {
-	winner, msg := service.DrawPlayer()
-	if winner == "" {
-		ctx.JSON(http.StatusOK, gin.H{"message": msg})
+func Draw(c *gin.Context) {
+	winner, remaining, err := service.DrawPlayer()
+	if err != nil {
+		c.JSON(http.StatusOK, gin.H{"message": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message":   "success",
 		"winner":    winner,
-		"remaining": msg,
+		"remaining": remaining,
 	})
 }
