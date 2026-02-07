@@ -87,7 +87,9 @@ func main() {
 			drawWinner()
 		case 2:
 			fmt.Println()
-			styleSubtle.Println("  See you later.")
+			styleAccent.Printf("  %s ", symbolCheck)
+			styleSubtle.Println("Session ended. Goodbye.")
+			fmt.Println()
 			return
 		}
 		fmt.Println()
@@ -164,12 +166,20 @@ func drawWinner() {
 
 	if resp.StatusCode == http.StatusOK {
 		if res.Winner != "" {
+			// Subtle "drawing" feel
+			styleSubtle.Print("  Drawing")
+			for i := 0; i < 3; i++ {
+				time.Sleep(150 * time.Millisecond)
+				styleSubtle.Print(".")
+			}
+			fmt.Print("\r") // Clear the "Drawing..." line
+
 			// Elegant result display
 			fmt.Print("  ")
 			styleHighlight.Printf("%s %s\n", symbolTrophy, res.Winner)
-			styleSubtle.Printf("    %d remaining in pool\n", res.Remaining)
+			styleSubtle.Printf("    %d left in pool\n", res.Remaining)
 		} else {
-			styleSubtle.Printf("  %s %s\n", symbolSelect, res.Message)
+			styleError.Printf("  %s %s\n", symbolCross, res.Message)
 		}
 	} else {
 		styleError.Printf("  %s Draw failed\n", symbolCross)
